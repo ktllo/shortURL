@@ -4,6 +4,17 @@ include_once 'config.php';
 include_once 'constant.php';
 include_once 'dbconn.php';
 $target = $_GET['id'];
+
+//Handle incorrect type of ID
+if( SU_ID_TYPE == 58){
+    $target = str_replace(array('0','1','l','o'),array('O','I','I','O'),$target);
+}if( SU_ID_TYPE == 36 ){
+    $target = str_replace(array('l'),array('I'),$target);
+    $target = strtoupper($target);
+}else{
+    $target = str_replace(array('0','1','l','o'),array('O','I','I','O'),$target);
+    $target = strtoupper($target);
+}
 $stmt = $db->prepare('SELECT * FROM '.SU_TABLE_ENTRY.' WHERE `id`=?');
 $stmt->execute(array($target));
 if($stmt->rowCount() == 0){
