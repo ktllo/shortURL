@@ -1,0 +1,63 @@
+\documentclass[a4paper,12pt,hidelinks]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[margin=0.675in]{geometry}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{fancyhdr}
+\usepackage{amsfonts}
+\usepackage[british]{babel}
+\usepackage{url}
+\usepackage{hyperref}
+\usepackage{lastpage}
+\usepackage{color}
+%\usepackage{apacite}
+%%\usepackage{hyperref}
+\usepackage{longtable}
+\newcommand{\us}{\textunderscore}
+\title{Available ID Type}
+\author{LO Kam Tao Leo(leolo@leolo.org)}
+\date{\today}
+
+\setlength\parindent{5pt}
+\begin{document}
+\maketitle
+\section{Identifier types}
+\begin{tabular}{|l|c|c|}
+\hline
+Type  & Character available & Except \\
+\hline
+34    & Upper Case Alphabet and numbers & 0,1 \\
+\hline
+36    & Upper Case Alphabet and numbers & N/A \\
+\hline
+58    & Alphabet and numbers & 0,1,l,o \\
+\hline
+62    & Alphabet and numbers & N/A \\
+\hline
+\end{tabular}
+
+\vspace{0.25in}
+Upgrades are possible using following path
+\begin{itemize}
+\item $34\rightarrow36\rightarrow62$
+\item $34\rightarrow58\rightarrow62$
+\end{itemize}
+
+But beware that some incorrect ID accepted in the past WILL NOT be accepted if they are legal identifier.
+
+\section{Auto replacement}
+\begin{tabular}{|l|c|}
+\hline
+Illegal Character  & Replaced with \\
+\hline
+0 (Number zero)   & O \\
+\hline
+1 (Number one)  & I  \\
+\hline
+l (Lower case L)    & I  \\
+\hline
+o (Lower case o)   & O  \\\hline
+ANY other lower case alphabet & Corresponding UPPER case alphabet\\
+\hline
+\end{tabular}
+\end{document}
