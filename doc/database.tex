@@ -1,0 +1,47 @@
+\documentclass[a4paper,12pt,hidelinks]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[margin=0.675in]{geometry}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{fancyhdr}
+\usepackage{amsfonts}
+\usepackage[british]{babel}
+\usepackage{url}
+\usepackage{hyperref}
+\usepackage{lastpage}
+\usepackage{color}
+%\usepackage{apacite}
+%%\usepackage{hyperref}
+
+
+\title{Database Schema}
+\author{LO Kam Tao Leo(leolo@leolo.org)}
+\date{\today}
+
+\setlength\parindent{5pt}
+\begin{document}
+\maketitle
+\section{su\textunderscore user}
+\begin{tabular}{c|c|p{9cm}}
+column Name & Data Type &  Description \\ \hline
+ \textbf{uid} & INT(10) & The user ID used to linking to other field in the database \\\hline
+ uname & VARCHAR(40) &  The actual user name\\\hline
+ password & VARCHAR(200) & Encrypted password\\\hline
+ flags & INT(10) & See flags documentation for details
+\end{tabular}\section{su\textunderscore entry}
+\begin{tabular}{c|c|p{9cm}}
+column Name & Data Type &  Description \\ \hline
+ \textbf{id} & VARCHAR(200) & The short URL id \\\hline
+ url & TEXT & the LONG url\\\hline
+ flags & INT(10) & See flags documentation for details\\\hline
+ created & DATETIME & when does this record created
+\end{tabular}\section{su\textunderscore log}
+\begin{tabular}{c|c|p{9cm}}
+column Name & Data Type &  Description \\ \hline
+ \textbf{id} & INT(10) & The short URL id \\\hline
+ num & INT(11) & sequence(TBD)\\\hline
+ source & VARCHAR(200) & source IP\\\hline
+ refer & VARCHAR(200) & HTTP REFER records\\\hline
+ country & CHAR(2) & The ISO-3166-1 2 character country code 
+\end{tabular}
+\end{document}
