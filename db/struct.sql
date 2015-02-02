@@ -4,11 +4,15 @@ CREATE TABLE su_user(
 `password` VARCHAR(200) NOT NULL,
 `flags` INTEGER UNSIGNED) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-CREATE TABLE su_entry(
-`id` VARCHAR(200) PRIMARY KEY,
-`url` TEXT NOT NULL,
-`flags` INTEGER UNSIGNED NOT NULL DEFAULT 1,
-`created` DATETIME) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+CREATE TABLE `su_user` (
+  `uid` int(10) unsigned NOT NULL,
+  `uname` varchar(40) NOT NULL,
+  `password` varchar(200) NOT NULL,
+  `flags` int(10) unsigned DEFAULT NULL,
+  PRIMARY KEY (`uid`),
+  UNIQUE KEY `uname` (`uname`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 
 CREATE TABLE `su_log` (
   `id` varchar(200) NOT NULL,
