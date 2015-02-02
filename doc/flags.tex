@@ -1,0 +1,44 @@
+\documentclass[a4paper,12pt,hidelinks]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[margin=0.675in]{geometry}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{fancyhdr}
+\usepackage{amsfonts}
+\usepackage[british]{babel}
+\usepackage{url}
+\usepackage{hyperref}
+\usepackage{lastpage}
+\usepackage{color}
+%\usepackage{apacite}
+%%\usepackage{hyperref}
+
+\newcommand{\us}{\textunderscore}
+\title{Flags used in Database}
+\author{LO Kam Tao Leo(leolo@leolo.org)}
+\date{\today}
+
+\setlength\parindent{5pt}
+\begin{document}
+\maketitle
+\section{User(Prefix: SU\us USER\us)}
+\begin{tabular}{c|c||c}
+Name & Value & Describtion \\\hline
+OP & 0001 & System Administrator \\ 
+HOP & 0002 & Half Administrator\\
+SOP & 0003 & Super Administrator\\\hline
+ADDURL & 0004 & Allow to add new entries\\
+APIUSE & 0008 & Allow the use of API\\
+REMOVE & 0010 & Allow remove entries created by that user\\
+NOLOG & 0020 & disable the log usage for the link clicked by that user
+\end{tabular}
+
+Remarks: \textbf{SU\us USER\us OP},\textbf{SU\us USER\us HOP} and \textbf{SU\us USER\us SOP} is actually 3 different level of administrator. An user can only get 1 of these flags.
+\section{URL(Prefix: SU\us FLAG\us)}
+\begin{tabular}{c|c||c}
+Name & Value & Describtion \\\hline
+ENABLE & 0001 & The link is enabled \\ 
+NOLOG & 0002 & Disable log for this link\\
+AUTH & 0004 & User authorization required\\
+\end{tabular}
+\end{document}
