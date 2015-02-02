@@ -1,5 +1,5 @@
 <?php
-
+include_once 'config.php';
 ##User Permission Bits
 define('SU_USER_OP',            0x0001);    #Sys Admin
 define('SU_USER_HOP',           0x0002);    #Half admin
