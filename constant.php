@@ -14,8 +14,12 @@ define('SU_FLAG_ENABLE',        0x0001);    #URL enabled
 define('SU_FLAG_NOLOG',         0x0002);    #No log for this entry
 define('SU_FLAG_AUTH',          0x0004);    #Authorization needed
 
+##Auth Mode
+define('SU_AUTH_PASSWORD', 0);
+
 ##DB Names
 define('SU_TABLE_USER',SU_DB_PREFIX.'user');
 define('SU_TABLE_ENTRY',SU_DB_PREFIX.'entry');
 define('SU_TABLE_LOG',SU_DB_PREFIX.'log');
+
 
