@@ -31,7 +31,7 @@ function login($user,$password,$mode=SU_AUTH_PASSWORD){
         $stmt->execute(array($user));
         if($stmt->rowCount()==1){
             $row = $stmt->fetch(PDO::FETCH_ASSOC);
-            if(password_verify($password,$row['password']){
+            if(password_verify($password,$row['password'])){
                 if (session_status() == PHP_SESSION_NONE) {
                     session_start();
                 }
