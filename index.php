@@ -62,7 +62,7 @@ $(function(){
             <form action="login.php" method="post" name="flogin" id="flogin">
                 <label for="uname">User Name</label>
                 <input name="uname" id="uname" type="text">
-                <label for="password">User Name</label>
+                <label for="password">Password</label>
                 <input name="password" id="password" type="password">
                 <button id="login">Login</button>
             </form>
