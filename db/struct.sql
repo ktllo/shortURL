@@ -21,6 +21,6 @@ CREATE TABLE `su_log` (
   `source` varchar(200) NOT NULL,
   `refer` varchar(200) DEFAULT NULL,
   `country` char(2) NOT NULL DEFAULT 'XA',
-  PRIMARY KEY (`id`,`num`)
+  PRIMARY KEY (`id`,`num`,`datetime`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 

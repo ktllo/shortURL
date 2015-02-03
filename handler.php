@@ -40,7 +40,13 @@ if($needLog){
     }catch(GeoIp2\Exception\AddressNotFoundException $e){
         $record = 'XX';
     }
-    echo $record;
+    if(empty($_SERVER['HTTP_REFERER']))
+        $refer = '';
+    else
+        $refer =$_SERVER['HTTP_REFERER']; 
+    $stmt = $db->prepare('INSERT INTO `su_log`(`id`,`num`,`datetime`,`source`,`refer`,`country`) VALUES (?,ROUND(RAND()*1000000000),NOW(),?,?,?);');
+    $stmt->execute(array($target,$_SERVER['REMOTE_ADDR'],$refer,$record));
+
 }
 
-//header('Location: '.$row['url']);
+header('Location: '.$row['url']);
