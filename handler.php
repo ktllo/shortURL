@@ -1,4 +1,6 @@
 <?php
+require 'includes/geoip2.phar';
+use GeoIp2\Database\Reader;
 define('SU_RUN',0);
 include_once 'config.php';
 include_once 'constant.php';
@@ -29,5 +31,16 @@ if(!($row['flags'] & SU_FLAG_ENABLE)){
     return;
 }
 #TODO : Logging
+$needLog = true;
+#TODO : Check is logging needed
+if($needLog){
+    $reader = new Reader(SU_GEO_DB);
+    try{
+        $record = $reader->city($_SERVER['REMOTE_ADDR'])->country->isoCode;
+    }catch(GeoIp2\Exception\AddressNotFoundException $e){
+        $record = 'XX';
+    }
+    echo $record;
+}
 
-header('Location: '.$row['url']);
+//header('Location: '.$row['url']);
