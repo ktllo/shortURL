@@ -28,12 +28,27 @@ $(function(){
         }
     );
 <?php }if(getUserFlag() & SU_USER_ADDURL){ ?>
-    $( "#newURL" ).accordion({
+   /* $( "#newURL" ).accordion({
         collapsible: true
-    });
+});*/
     $( "#shortern" ).button().click(
         function(event){
-            alert("Shortern!");
+            $.post('ajax.php',
+                {
+                    action : 'new',
+                    url : document.getElementById('long').value
+                },
+                function(data, status){
+                    json = JSON.parse(data);
+                    if( json.Code == 200 ){
+                        alert('Created. <?php echo SU_BASE_URL;?>/'+json.id);
+                    }else{
+                        alert('You are not allowed to add new URL');
+
+                    }
+                }
+            
+            );
         }
     );
 <?php }if(isset($_GET['msg'])){ ?>
@@ -54,7 +69,7 @@ $(function(){
     <body>
         <?php if(isset($_GET['msg'])){ ?>
         <div id="dialog" title="Error">
-            <p>Incorrect username/password</p>
+            <p id="dialogMessage">Incorrect username/password</p>
         </div>
         <?php } ?>
         <div>
@@ -73,10 +88,8 @@ $(function(){
         <?php if(getUserFlag() & SU_USER_ADDURL){ ?>
         <div id="newURL">
             <h3>Add New ShortURL</h3>
-            <form>
-                <label for="url">Shorten </label><input type="url" name="url" id="url">
-                <button id="shortern">Shorten!</button>
-            </form>
+            <input type="text" name="url" id="long">
+            <input type="button" id="shortern" value="Shortern!">
         </div>
         <?php } ?>
 
