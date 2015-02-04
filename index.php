@@ -11,9 +11,26 @@ define('UID',checkAuth());
     <head>
         <title>URL Shorterner</title>
         <link rel="stylesheet" href="includes/jquery-ui.css">
-        <script src="includes/jquery-2.0.3.js"></script>
-        <script src="includes/jquery-ui.js"></script>
-        <script>
+        <script type="text/javascript" src="includes/jquery-2.0.3.js"></script>
+        <script type="text/javascript" src="includes/jquery-ui.js"></script>
+        <script type="text/javascript" src="includes/jquery.zclip.js"></script>
+<script type="text/javascript">
+function reloadList(){
+    $.post('ajax.php',
+        {action : 'list'},
+        function(data){
+            json = JSON.parse(data);
+            $("#itemCount").html(json.count);
+            items = json.data;
+            $("#itemList").html('');
+            for(i=0;i<json.count;i++){
+                row = $("#itemList").append('<tr><td><a href="<?php echo SU_BASE_URL;?>/'+json.data[i].id+'" target="_blank">'+json.data[i].id+'</a></td><td><a href="'+json.data[i].url+'" target="_blank">'+json.data[i].url+'</a></td><td>'+json.data[i].hit+'</td></tr>');
+
+            }
+        }
+    );
+}
+
 $(function(){
     <?php if(UID != 0){ ?>
     $("#logoff").button().click(
@@ -50,7 +67,8 @@ $(function(){
                                 OK : function() {
                                     $( this ).dialog( "close" );
                                     }
-                                }
+                            }
+                                
                             }
                         );
                     }else{
@@ -83,10 +101,18 @@ $(function(){
         }
     ).parent().addClass("ui-state-error");
 <?php } ?>
+    $("#reload").button({
+        icons : {primary : "ui-icon-arrowrefresh-1-e"},
+        text: false
+    }) .click(function( event ) {
+        reloadList();
+    });
 });
+
+
         </script>
     </head>
-    <body>
+    <body onLoad="reloadList()">
         <?php if(isset($_GET['msg'])){ ?>
         <div id="dialog" title="Error">
             <p id="dialogMessage">Incorrect username/password</p>
@@ -111,9 +137,20 @@ $(function(){
             <input type="text" name="url" id="long">
             <input type="button" id="shortern" value="Shortern!">
         </div>
+        <?php }if(checkAuth()!=0){ ?>
+            <h3>Created items<button id="reload">Reload</button></h3>
+            <div>You have <span id="itemCount">?</span> shortURL created.</div>
+                <table>
+                    <tr>
+                       <th>ShortURL</th>
+                       <th>URL</th>
+                       <th>Hit Count</th>
+                    </tr>
+                    <tbody id="itemList">
+
+                    </tbody>
+                </table>
         <?php } ?>
-
-
         <hr/>
         URL Shortener Version <?php echo SU_VERSION;?>
     </body>
