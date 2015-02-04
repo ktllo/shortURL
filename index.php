@@ -13,7 +13,7 @@ define('UID',checkAuth());
         <link rel="stylesheet" href="includes/jquery-ui.css">
         <script type="text/javascript" src="includes/jquery-2.0.3.js"></script>
         <script type="text/javascript" src="includes/jquery-ui.js"></script>
-        <script type="text/javascript" src="includes/jquery.zclip.js"></script>
+        
 <script type="text/javascript">
 function reloadList(){
     $.post('ajax.php',
@@ -62,6 +62,7 @@ $(function(){
                         var dialog =  $(document.createElement('div'));
                         $( dialog ).attr('title','Hurray!');
                         $( dialog ).html('The short URL you requested is created.<br><a href="<?php echo SU_BASE_URL;?>/'+json.id+'" target="_blank"><?php echo SU_BASE_URL;?>/'+json.id+'</a>');
+                        $('#lastID').html('<?php echo SU_BASE_URL;?>/'+json.id);
                         $( dialog ).dialog({
                             buttons: {
                                 OK : function() {
@@ -107,6 +108,7 @@ $(function(){
     }) .click(function( event ) {
         reloadList();
     });
+    
 });
 
 
@@ -136,6 +138,7 @@ $(function(){
             <h3>Add New ShortURL</h3>
             <input type="text" name="url" id="long">
             <input type="button" id="shortern" value="Shortern!">
+            <a id="copy" href="#">Copy to clipboard</a>
         </div>
         <?php }if(checkAuth()!=0){ ?>
             <h3>Created items<button id="reload">Reload</button></h3>
@@ -153,5 +156,6 @@ $(function(){
         <?php } ?>
         <hr/>
         URL Shortener Version <?php echo SU_VERSION;?>
+        <div style="display:none;" id="lastID"></div>
     </body>
 </html>
