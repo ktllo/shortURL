@@ -25,7 +25,7 @@ DROP TABLE IF EXISTS `su_entry`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `su_entry` (
-  `id` varchar(200) NOT NULL,
+  `id` varchar(200) CHARACTER SET latin1 COLLATE latin1_bin NOT NULL,
   `url` text NOT NULL,
   `flags` int(10) unsigned NOT NULL DEFAULT '1',
   `created` datetime DEFAULT NULL,
@@ -78,4 +78,4 @@ CREATE TABLE `su_user` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-02-03 11:58:38
+-- Dump completed on 2015-02-04 16:40:55
