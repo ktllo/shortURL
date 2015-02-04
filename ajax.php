@@ -48,3 +48,14 @@ if($_POST['action']=='new'){
 <?php
     return;
 }
+if($_POST['action']=='list'){
+    if(checkAuth() == 0){
+?>
+{
+    "count" : 0,
+    "data" : []
+}
+<?php
+        return;
+    }
+}
