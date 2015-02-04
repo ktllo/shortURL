@@ -39,12 +39,32 @@ $(function(){
                     url : document.getElementById('long').value
                 },
                 function(data, status){
+                    alert(data);
                     json = JSON.parse(data);
                     if( json.Code == 200 ){
-                        alert('Created. <?php echo SU_BASE_URL;?>/'+json.id);
+                        var dialog =  $(document.createElement('div'));
+                        $( dialog ).attr('title','Hurray!');
+                        $( dialog ).html('The short URL you requested is created.<br><a href="<?php echo SU_BASE_URL;?>/'+json.id+'" target="_blank"><?php echo SU_BASE_URL;?>/'+json.id+'</a>');
+                        $( dialog ).dialog({
+                            buttons: {
+                                OK : function() {
+                                    $( this ).dialog( "close" );
+                                    }
+                                }
+                            }
+                        );
                     }else{
-                        alert('You are not allowed to add new URL');
-
+                        var dialog =  $(document.createElement('div'));
+                        $( dialog ).attr('title','Error!');
+                        $( dialog ).html('You are not allowed to add new URL');
+                        $( dialog ).dialog({
+                            buttons: {
+                                OK : function() {
+                                    $( this ).dialog( "close" );
+                                    }
+                                }
+                            }
+                        ).parent().addClass("ui-state-error");
                     }
                 }
             

@@ -6,13 +6,13 @@ include_once 'dbconn.php';
 include_once 'function.php';
 if($_POST['action']=='new'){
     if(!(getUserFlag() & SU_USER_ADDURL)){
-        header("HTTP/1.1 403 Forbidden");
 ?>
 {
     "Code"  : 403,
     "Info"  : "No Permission" 
 }
 <?php
+    return;
     }
     if(SU_ID_TYPE == 34)
         $idSpace = SU_ID_34;
@@ -46,4 +46,5 @@ if($_POST['action']=='new'){
     "round" : <?php echo $count;?>
 }
 <?php
+    return;
 }
