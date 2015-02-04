@@ -10,10 +10,10 @@ $target = $_GET['id'];
 //Handle incorrect type of ID
 if( SU_ID_TYPE == 58){
     $target = str_replace(array('0','1','l','o'),array('O','I','I','O'),$target);
-}if( SU_ID_TYPE == 36 ){
+}else if( SU_ID_TYPE == 36 ){
     $target = str_replace(array('l'),array('I'),$target);
     $target = strtoupper($target);
-}else{
+}else if( SU_ID_TYPE == 34 ){
     $target = str_replace(array('0','1','l','o'),array('O','I','I','O'),$target);
     $target = strtoupper($target);
 }
