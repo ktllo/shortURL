@@ -14,7 +14,7 @@ define('SU_USER_NOLOG',         0x0020);    #No log for link usage
 define('SU_FLAG_ENABLE',        0x0001);    #URL enabled
 define('SU_FLAG_NOLOG',         0x0002);    #No log for this entry
 define('SU_FLAG_AUTH',          0x0004);    #Authorization needed
-
+define('SU_FLAG_ADMIN_DISABLE', 0x0008);    #Indicate the link is disable by admin
 ##Auth Mode
 define('SU_AUTH_PASSWORD', 0);
 define('SU_WEB', 0);
