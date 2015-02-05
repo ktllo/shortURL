@@ -137,7 +137,6 @@ $(function(){
             <h3>Add New ShortURL</h3>
             <input type="text" name="url" id="long">
             <input type="button" id="shortern" value="Shortern!">
-            <a id="copy" href="#">Copy to clipboard</a>
         </div>
         <?php }if(checkAuth()!=0){ ?>
             <h3>Created items<button id="reload">Reload</button></h3>
