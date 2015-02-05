@@ -39,7 +39,6 @@ $(function(){
                     url : document.getElementById('long').value
                 },
                 function(data, status){
-                    alert(data);
                     json = JSON.parse(data);
                     if( json.Code == 200 ){
                         var dialog =  $(document.createElement('div'));
@@ -113,7 +112,7 @@ $(function(){
         </div>
         <?php } ?>
 
-
+	<div style="font-weight:bold">Please use user demo and password demo to login<br>Please note that the database will be reseted everday</div>
         <hr/>
         URL Shortener Version <?php echo SU_VERSION;?>
     </body>
