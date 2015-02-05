@@ -14,6 +14,15 @@ if($_POST['action']=='new'){
 <?php
     return;
     }
+    $url = processURL($_POST['url']);
+    if($url === false){?>
+{
+    "Code"  : 403,
+    "Info"  : "Illegal URL Schema" 
+}
+<?php 
+    return;
+    }
     if(SU_ID_TYPE == 34)
         $idSpace = SU_ID_34;
     else if(SU_ID_TYPE == 36)
@@ -32,7 +41,7 @@ if($_POST['action']=='new'){
         for($i=0;$i<SU_ID_LENGTH;$i++){
             $id.=$idSpace{rand(0,SU_ID_TYPE-1)};
         }
-        $stmt->execute(array($id,$_POST['url'],SU_DEFAULT_URL_FLAGS,checkAuth()));
+        $stmt->execute(array($id,$url,SU_DEFAULT_URL_FLAGS,checkAuth()));
         $count++;
         if($stmt->rowCount()==1){
             break;
@@ -42,9 +51,44 @@ if($_POST['action']=='new'){
 {
     "Code"  : 200,
     "id" : "<?php echo $id;?>",
-    "long"  : "<?php echo $_POST['url'];?>",
+    "long"  : "<?php echo $url?>",
     "round" : <?php echo $count;?>
 }
 <?php
     return;
+}
+if($_POST['action']=='list'){
+    if(checkAuth() == 0){
+?>
+{
+    "count" : 0,
+    "data" : []
+}
+<?php
+        return;
+    }
+    $uid = checkAuth();
+    $stmt = $db->prepare('SELECT * FROM '.SU_TABLE_ENTRY.' WHERE `owner`=?');
+    $stmt->execute(array($uid));
+?>
+{
+    "count" : <?php echo $stmt->rowCount();?>,
+    "data"  : [
+<?php
+    while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
+?>
+        {"id"    :   "<?php echo $row['id'];?>",
+        "url"   :   "<?php echo $row['url'];?>",
+<?php
+        $details = $db->prepare('SELECT COUNT(*) FROM '.SU_TABLE_LOG.' WHERE `id`=?');
+        $details->execute(array($row['id']));
+        $detailRow = $details->fetch(PDO::FETCH_NUM);
+?>
+        "hit"   :   <?php echo $detailRow[0];?>},
+<?php
+    }
+?>
+    {}]
+}
+<?php
 }
