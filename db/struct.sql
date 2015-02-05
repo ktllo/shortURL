@@ -1,5 +1,5 @@
-CREATE DATABASE  IF NOT EXISTS `surl` /*!40100 DEFAULT CHARACTER SET utf8 */;
-USE `surl`;
+CREATE DATABASE  IF NOT EXISTS `demo` /*!40100 DEFAULT CHARACTER SET utf8 */;
+USE `demo`;
 -- MySQL dump 10.13  Distrib 5.6.11, for Win32 (x86)
 --
 -- Host: localhost    Database: surl
@@ -67,6 +67,9 @@ CREATE TABLE `su_user` (
   PRIMARY KEY (`uid`),
   UNIQUE KEY `uname` (`uname`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+INSERT INTO `su_user` VALUES (1,'demo','$2y$10$TbhxWoSdYgM2RN.94G0jP.IAsCLhNHC2w6Qy1B9iHLCJZ.UCe7t5K', 31);
+
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
