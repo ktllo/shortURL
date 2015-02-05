@@ -56,7 +56,6 @@ $(function(){
                     url : document.getElementById('long').value
                 },
                 function(data, status){
-                    alert(data);
                     json = JSON.parse(data);
                     if( json.Code == 200 ){
                         var dialog =  $(document.createElement('div'));
@@ -75,7 +74,7 @@ $(function(){
                     }else{
                         var dialog =  $(document.createElement('div'));
                         $( dialog ).attr('title','Error!');
-                        $( dialog ).html('You are not allowed to add new URL');
+                        $( dialog ).html('You are not allowed to add new URL because <span style="font-weight:bold">'+json.Info+'</span>');
                         $( dialog ).dialog({
                             buttons: {
                                 OK : function() {

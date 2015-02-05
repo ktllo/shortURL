@@ -16,3 +16,6 @@ define('SU_USER_DEFAULT',       0x0004);    #Default flags for new users
 define('SU_ANONYMOUS',          0x0000);    #Flags for unidentified user
 define('SU_GEO_DB','includes/GeoLite2-City.mmdb');
 define('SU_BASE_URL','http://localhost/short');
+
+define('SU_DEFAULT_SCHEMA','http');
+$permittedSchema=array('http','https','ftp','irc','ircs');

@@ -14,6 +14,15 @@ if($_POST['action']=='new'){
 <?php
     return;
     }
+    $url = processURL($_POST['url']);
+    if($url === false){?>
+{
+    "Code"  : 403,
+    "Info"  : "Illegal URL Schema" 
+}
+<?php 
+    return;
+    }
     if(SU_ID_TYPE == 34)
         $idSpace = SU_ID_34;
     else if(SU_ID_TYPE == 36)
@@ -32,7 +41,7 @@ if($_POST['action']=='new'){
         for($i=0;$i<SU_ID_LENGTH;$i++){
             $id.=$idSpace{rand(0,SU_ID_TYPE-1)};
         }
-        $stmt->execute(array($id,$_POST['url'],SU_DEFAULT_URL_FLAGS,checkAuth()));
+        $stmt->execute(array($id,$url,SU_DEFAULT_URL_FLAGS,checkAuth()));
         $count++;
         if($stmt->rowCount()==1){
             break;
@@ -42,7 +51,7 @@ if($_POST['action']=='new'){
 {
     "Code"  : 200,
     "id" : "<?php echo $id;?>",
-    "long"  : "<?php echo $_POST['url'];?>",
+    "long"  : "<?php echo $url?>",
     "round" : <?php echo $count;?>
 }
 <?php
