@@ -33,4 +33,4 @@ define('SU_ID_62','0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxy
 
 
 
-define('SU_VERSION', '0.1-alpha');
+define('SU_VERSION', '0.1-alpha-1');

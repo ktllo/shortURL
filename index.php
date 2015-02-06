@@ -71,6 +71,7 @@ $(function(){
                                 
                             }
                         );
+                        reloadList();
                     }else{
                         var dialog =  $(document.createElement('div'));
                         $( dialog ).attr('title','Error!');
