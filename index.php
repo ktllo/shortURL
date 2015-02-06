@@ -139,11 +139,8 @@ $(function(){
             <input type="button" id="shortern" value="Shortern!">
             <a id="copy" href="#">Copy to clipboard</a>
         </div>
-<<<<<<< HEAD
-        <?php } ?>
 
 	<div style="font-weight:bold">Please use user demo and password demo to login<br>Please note that the database will be reseted everday</div>
-=======
         <?php }if(checkAuth()!=0){ ?>
             <h3>Created items<button id="reload">Reload</button></h3>
             <div>You have <span id="itemCount">?</span> shortURL created.</div>
@@ -158,7 +155,6 @@ $(function(){
                     </tbody>
                 </table>
         <?php } ?>
->>>>>>> eec58a7571f2fc6a40e34bf14144c8051e16497b
         <hr/>
         URL Shortener Version <?php echo SU_VERSION;?>
         <div style="display:none;" id="lastID"></div>
