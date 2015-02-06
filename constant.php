@@ -1,8 +1,8 @@
 <?php
 include_once 'config.php';
 ##User Permission Bits
-define('SU_USER_OP',            0x0001);    #Sys Admin
-define('SU_USER_HOP',           0x0002);    #Half admin
+define('SU_USER_HOP',           0x0001);    #Half admin
+define('SU_USER_OP',            0x0002);    #Sys Admin
 define('SU_USER_SOP',           0x0003);    #Super admin
 define('SU_USER_ADDURL',        0x0004);    #Able to add URL
 define('SU_USER_APIUSE',        0x0008);    #Can use API
@@ -14,7 +14,7 @@ define('SU_USER_NOLOG',         0x0020);    #No log for link usage
 define('SU_FLAG_ENABLE',        0x0001);    #URL enabled
 define('SU_FLAG_NOLOG',         0x0002);    #No log for this entry
 define('SU_FLAG_AUTH',          0x0004);    #Authorization needed
-
+define('SU_FLAG_ADMIN_DISABLE', 0x0008);    #Indicate the link is disable by admin
 ##Auth Mode
 define('SU_AUTH_PASSWORD', 0);
 define('SU_WEB', 0);
@@ -33,4 +33,4 @@ define('SU_ID_62','0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxy
 
 
 
-define('SU_VERSION', '0.1-alpha');
+define('SU_VERSION', '0.1-alpha-1');

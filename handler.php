@@ -25,7 +25,7 @@ if($stmt->rowCount() == 0){
     return;
 }
 $row = $stmt->fetch(PDO::FETCH_ASSOC);
-if(!($row['flags'] & SU_FLAG_ENABLE)){
+if(!($row['flags'] & SU_FLAG_ENABLE) || ($row['flags'] & SU_FLAG_ADMIN_DISABLE)){
     header("HTTP/1.1 403 Forbidden");
     include 'info/403.php';
     return;
