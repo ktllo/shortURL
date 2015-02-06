@@ -71,6 +71,7 @@ $(function(){
                                 
                             }
                         );
+                        reloadList();
                     }else{
                         var dialog =  $(document.createElement('div'));
                         $( dialog ).attr('title','Error!');
@@ -137,7 +138,6 @@ $(function(){
             <h3>Add New ShortURL</h3>
             <input type="text" name="url" id="long">
             <input type="button" id="shortern" value="Shortern!">
-            <a id="copy" href="#">Copy to clipboard</a>
         </div>
 
 	<div style="font-weight:bold">Please use user demo and password demo to login<br>Please note that the database will be reseted everday</div>
