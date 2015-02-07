@@ -77,18 +77,33 @@ if($_POST['action']=='list'){
 <?php
     while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 ?>
-        {"id"    :   "<?php echo $row['id'];?>",
+        {
+        "id"    :   "<?php echo $row['id'];?>",
         "url"   :   "<?php echo $row['url'];?>",
 <?php
         $details = $db->prepare('SELECT COUNT(*) FROM '.SU_TABLE_LOG.' WHERE `id`=?');
         $details->execute(array($row['id']));
         $detailRow = $details->fetch(PDO::FETCH_NUM);
 ?>
-        "hit"   :   <?php echo $detailRow[0];?>},
+        "hit"   :   <?php echo $detailRow[0];?>,
+        "enabled" : <?php echo ($row['flags'] & SU_FLAG_ENABLE); ?>
+        },
 <?php
     }
 ?>
     {}]
 }
 <?php
+    return;
+}
+
+if($_POST['action']=='enable'){
+    $target = $_POST['id'];
+    #TODO: Check owner
+    #Start transaction and disable autocommit
+    #Check user
+    #retrive current flag
+    #calculate new flag(How to?)
+    #Commit and enable autocommit
+    return;
 }

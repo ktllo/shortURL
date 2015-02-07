@@ -19,17 +19,36 @@ function reloadList(){
     $.post('ajax.php',
         {action : 'list'},
         function(data){
+//            alert(data);
             json = JSON.parse(data);
             $("#itemCount").html(json.count);
             items = json.data;
             $("#itemList").html('');
             for(i=0;i<json.count;i++){
-                row = $("#itemList").append('<tr><td><a href="<?php echo SU_BASE_URL;?>/'+json.data[i].id+'" target="_blank">'+json.data[i].id+'</a></td><td><a href="'+json.data[i].url+'" target="_blank">'+json.data[i].url+'</a></td><td>'+json.data[i].hit+'</td></tr>');
-
+                row='<tr><td><a href="<?php echo SU_BASE_URL;?>/'+json.data[i].id+'" target="_blank">'+json.data[i].id+'</a></td><td><a href="'+json.data[i].url+'" target="_blank">'+json.data[i].url+'</a></td><td>'+json.data[i].hit+'</td>';
+                if(json.data[i].enabled){
+                    row+='<td>Enabled</td><td><button onclick="disableLink(\''+json.data[i].id+'\');">Disable</button></td>';
+                }else{
+                    row+='<td>Disbaled</td><td><button onclick="enableLink();">Enable</button></td>';
+                }
+                row+='</tr>';
+                $("#itemList").append(row);
             }
         }
     );
 }
+function disableLink(id){
+    $.post('ajax.php',
+            {
+                action : 'enable',
+                id : id
+            }
+    ,function(data){
+        alert(data);
+    });
+}
+
+
 
 $(function(){
     <?php if(UID != 0){ ?>
@@ -147,6 +166,8 @@ $(function(){
                        <th>ShortURL</th>
                        <th>URL</th>
                        <th>Hit Count</th>
+                       <th>Status</th>
+                       <th>Action</th>
                     </tr>
                     <tbody id="itemList">
 
