@@ -44,7 +44,7 @@ function disableLink(id){
                 id : id
             }
     ,function(data){
-        alert(data);
+        reloadList();
     });
 }
 
