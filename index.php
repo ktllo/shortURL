@@ -29,7 +29,7 @@ function reloadList(){
                 if(json.data[i].enabled){
                     row+='<td>Enabled</td><td><button onclick="disableLink(\''+json.data[i].id+'\');">Disable</button></td>';
                 }else{
-                    row+='<td>Disbaled</td><td><button onclick="enableLink();">Enable</button></td>';
+                    row+='<td>Disbaled</td><td><button onclick="enableLink(\''+json.data[i].id+'\');">Enable</button></td>';
                 }
                 row+='</tr>';
                 $("#itemList").append(row);
@@ -40,7 +40,7 @@ function reloadList(){
 function disableLink(id){
     $.post('ajax.php',
             {
-                action : 'enable',
+                action : 'disable',
                 id : id
             }
     ,function(data){
@@ -48,6 +48,16 @@ function disableLink(id){
     });
 }
 
+function enableLink(id){
+    $.post('ajax.php',
+            {
+                action : 'enable',
+                id : id
+            }
+    ,function(data){
+        reloadList();
+    });
+}
 
 
 $(function(){
