@@ -3,3 +3,4 @@
 doc/*
 !doc/*.tex
 includes/GeoLite2-City.mmdb
+includes/*/cache/*

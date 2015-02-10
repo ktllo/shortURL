@@ -67,6 +67,23 @@ $(function(){
             window.location='logoff.php';
         }
     );
+    $("#newPassword").button().click(
+        function(event){
+            var dialog =  $(document.createElement('div'));
+            $( dialog ).attr('title','Change Password');
+            $( dialog ).html('TBF');
+            $( dialog ).dialog({
+                    buttons: {
+                        OK : function() {
+                            alert('TBF');
+                            $( this ).dialog( "close" );
+                        }
+                    }
+                                
+                }
+           );
+        }  
+    );
 <?php }else{ ?>
     $("#login").button().click(
         function(event){
@@ -159,6 +176,7 @@ $(function(){
                 <button id="login">Login</button>
             </form>
         <?php }else{ ?>
+            <button id="newPassword">Change Password</button>    
             <button id="logoff">Logoff</button>
         <?php } ?>
         </div>
