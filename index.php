@@ -29,7 +29,7 @@ function reloadList(){
                 if(json.data[i].enabled){
                     row+='<td>Enabled</td><td><button onclick="disableLink(\''+json.data[i].id+'\');">Disable</button></td>';
                 }else{
-                    row+='<td>Disbaled</td><td><button onclick="enableLink();">Enable</button></td>';
+                    row+='<td>Disbaled</td><td><button onclick="enableLink(\''+json.data[i].id+'\');">Enable</button></td>';
                 }
                 row+='</tr>';
                 $("#itemList").append(row);
@@ -40,14 +40,24 @@ function reloadList(){
 function disableLink(id){
     $.post('ajax.php',
             {
+                action : 'disable',
+                id : id
+            }
+    ,function(data){
+        reloadList();
+    });
+}
+
+function enableLink(id){
+    $.post('ajax.php',
+            {
                 action : 'enable',
                 id : id
             }
     ,function(data){
-        alert(data);
+        reloadList();
     });
 }
-
 
 
 $(function(){
@@ -56,6 +66,23 @@ $(function(){
         function(event){
             window.location='logoff.php';
         }
+    );
+    $("#newPassword").button().click(
+        function(event){
+            var dialog =  $(document.createElement('div'));
+            $( dialog ).attr('title','Change Password');
+            $( dialog ).html('TBF');
+            $( dialog ).dialog({
+                    buttons: {
+                        OK : function() {
+                            alert('TBF');
+                            $( this ).dialog( "close" );
+                        }
+                    }
+                                
+                }
+           );
+        }  
     );
 <?php }else{ ?>
     $("#login").button().click(
@@ -149,6 +176,7 @@ $(function(){
                 <button id="login">Login</button>
             </form>
         <?php }else{ ?>
+            <button id="newPassword">Change Password</button>    
             <button id="logoff">Logoff</button>
         <?php } ?>
         </div>
