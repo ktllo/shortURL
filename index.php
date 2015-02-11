@@ -19,17 +19,46 @@ function reloadList(){
     $.post('ajax.php',
         {action : 'list'},
         function(data){
+//            alert(data);
             json = JSON.parse(data);
             $("#itemCount").html(json.count);
             items = json.data;
             $("#itemList").html('');
             for(i=0;i<json.count;i++){
-                row = $("#itemList").append('<tr><td><a href="<?php echo SU_BASE_URL;?>/'+json.data[i].id+'" target="_blank">'+json.data[i].id+'</a></td><td><a href="'+json.data[i].url+'" target="_blank">'+json.data[i].url+'</a></td><td>'+json.data[i].hit+'</td></tr>');
-
+                row='<tr><td><a href="<?php echo SU_BASE_URL;?>/'+json.data[i].id+'" target="_blank">'+json.data[i].id+'</a></td><td><a href="'+json.data[i].url+'" target="_blank">'+json.data[i].url+'</a></td><td>'+json.data[i].hit+'</td>';
+                if(json.data[i].enabled){
+                    row+='<td>Enabled</td><td><button onclick="disableLink(\''+json.data[i].id+'\');">Disable</button></td>';
+                }else{
+                    row+='<td>Disbaled</td><td><button onclick="enableLink(\''+json.data[i].id+'\');">Enable</button></td>';
+                }
+                row+='</tr>';
+                $("#itemList").append(row);
             }
         }
     );
 }
+function disableLink(id){
+    $.post('ajax.php',
+            {
+                action : 'disable',
+                id : id
+            }
+    ,function(data){
+        reloadList();
+    });
+}
+
+function enableLink(id){
+    $.post('ajax.php',
+            {
+                action : 'enable',
+                id : id
+            }
+    ,function(data){
+        reloadList();
+    });
+}
+
 
 $(function(){
     <?php if(UID != 0){ ?>
@@ -37,6 +66,23 @@ $(function(){
         function(event){
             window.location='logoff.php';
         }
+    );
+    $("#newPassword").button().click(
+        function(event){
+            var dialog =  $(document.createElement('div'));
+            $( dialog ).attr('title','Change Password');
+            $( dialog ).html('TBF');
+            $( dialog ).dialog({
+                    buttons: {
+                        OK : function() {
+                            alert('TBF');
+                            $( this ).dialog( "close" );
+                        }
+                    }
+                                
+                }
+           );
+        }  
     );
 <?php }else{ ?>
     $("#login").button().click(
@@ -130,6 +176,7 @@ $(function(){
                 <button id="login">Login</button>
             </form>
         <?php }else{ ?>
+            <button id="newPassword">Change Password</button>    
             <button id="logoff">Logoff</button>
         <?php } ?>
         </div>
@@ -149,6 +196,8 @@ $(function(){
                        <th>ShortURL</th>
                        <th>URL</th>
                        <th>Hit Count</th>
+                       <th>Status</th>
+                       <th>Action</th>
                     </tr>
                     <tbody id="itemList">
 

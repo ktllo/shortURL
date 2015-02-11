@@ -33,7 +33,10 @@ CREATE TABLE `su_entry` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
+INSERT INTO `su_entry` (`id`, `url`, `flags`, `created`, `owner`) VALUES
+('IKkWM', 'https://www.github.com', 1, '2015-02-04 22:54:07', 1),
+('LsIUK', 'http://www.facebook.com', 1, '2015-02-04 22:53:42', 0),
+('RwOPE', 'irc://chat.freenode.net/#freenode', 1, '2015-02-04 22:54:29', 1);
 --
 -- Table structure for table `su_log`
 --
