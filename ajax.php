@@ -35,13 +35,13 @@ if($_POST['action']=='new'){
     $count = 0;
     while(true){
         $stmt = $db->prepare('INSERT INTO '.SU_TABLE_ENTRY.
-            ' (`id`,`url`,`flags`,`created`,`owner`) VALUES'.
-            ' (?,?,?,NOW(),?);');
+            ' (`id`,`url`,`flags`,`created`,`owner`,`source`) VALUES'.
+            ' (?,?,?,NOW(),?,?);');
         $id = '';
         for($i=0;$i<SU_ID_LENGTH;$i++){
             $id.=$idSpace{rand(0,SU_ID_TYPE-1)};
         }
-        $stmt->execute(array($id,$url,SU_DEFAULT_URL_FLAGS,checkAuth()));
+        $stmt->execute(array($id,$url,SU_DEFAULT_URL_FLAGS,checkAuth(),$_SERVER['REMOTE_ADDR']));
         $count++;
         if($stmt->rowCount()==1){
             break;
