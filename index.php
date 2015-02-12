@@ -184,7 +184,7 @@ $(function(){
         <div id="newURL">
             <h3>Add New ShortURL</h3>
             <input type="text" name="url" id="long">
-            <input type="button" id="shortern" value="Shortern!">
+            <input type="button" id="shortern" value="Shorten!">
         </div>
         <?php }if(checkAuth()!=0){ ?>
             <h3>Created items<button id="reload">Reload</button></h3>
