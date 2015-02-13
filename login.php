@@ -8,7 +8,6 @@ $stmt = $db->prepare('SELECT * FROM '.SU_TABLE_USER.' WHERE `uname`=?;');
 $stmt->execute(array($_POST['uname']));
 if($stmt->rowCount()==1){
     $row = $stmt->fetch(PDO::FETCH_ASSOC);
-    print_r($row);
     if(password_verify($_POST['password'],$row['password'])){
         if (session_status() == PHP_SESSION_NONE) {
             session_start();
