@@ -73,8 +73,7 @@ function changePassword(){
                         var error =  $(document.createElement('div'));
                         $( error ).attr('title','Error');
                         $( error ).html('Password does not match');
-                        $( error ).dialog({ modal : true }).parent().addClass("ui-state-error");
-                        changePassword();
+                        $( error ).dialog({ modal : true ,buttons:{OK : function(){  $( this ).dialog( "close" ); changePassword(); }}}).parent().addClass("ui-state-error");
                         return;
                     }
                     $.post('ajax.php',
@@ -95,8 +94,7 @@ function changePassword(){
                                 var error =  $(document.createElement('div'));
                                 $( error ).attr('title','Error');
                                 $( error ).html('Password incorrect');
-                                $( error ).dialog({ modal : true }).parent().addClass("ui-state-error");
-                                changePassword();
+                                $( error ).dialog({ modal : true ,buttons:{OK : function(){  $( this ).dialog( "close" ); changePassword(); }}}).parent().addClass("ui-state-error");
                                 return;
                             }
                         }
