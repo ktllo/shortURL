@@ -71,12 +71,44 @@ $(function(){
         function(event){
             var dialog =  $(document.createElement('div'));
             $( dialog ).attr('title','Change Password');
-            $( dialog ).html('TBF');
+            $( dialog ).html('<table><tr><th>Old Password</th><td><input type="password" id="oldPassword"></td></tr><tr><th>New Password</th><td><input type="password" id="newpwd"></td></tr><tr><th>Retype new Password</th><td><input type="password" id="retypePassword"></td></tr></table>');
             $( dialog ).dialog({
                     buttons: {
-                        OK : function() {
-                            alert('TBF');
-                            $( this ).dialog( "close" );
+                        Go : function() {
+                            $( dialog ).dialog( "close" );
+                            opwd = $( dialog ).find('#oldPassword').val();
+                            npwd = $( dialog ).find('#newpwd').val();
+                            rpwd = $( dialog ).find('#retypePassword').val();
+                            if(npwd!=rpwd){
+                                var error =  $(document.createElement('div'));
+                                $( error ).attr('title','Error');
+                                $( error ).html('Password does not match');
+                                $( error ).dialog({ modal : true }).parent().addClass("ui-state-error");
+                                return;
+                            }
+                            $.post('ajax.php',
+                                {
+                                    action : 'password',
+                                    old : opwd,
+                                    new : npwd 
+                                },
+                                function(data){
+                                    result = JSON.parse(data);
+                                    if(result.Code == 200){
+                                       var error =  $(document.createElement('div'));
+                                        $( error ).attr('title','Hurray!');
+                                        $( error ).html('Password changed!');
+                                        $( error ).dialog();
+                                        return;
+                                    }else{
+                                        var error =  $(document.createElement('div'));
+                                        $( error ).attr('title','Error');
+                                        $( error ).html('Password incorrect');
+                                        $( error ).dialog({ modal : true }).parent().addClass("ui-state-error");
+                                        return;
+                                    }
+                                }
+                            );
                         }
                     }
                                 
