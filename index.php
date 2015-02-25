@@ -131,9 +131,6 @@ $(function(){
         }
       );
 <?php }if(getUserFlag() & SU_USER_ADDURL){ ?>
-   /* $( "#newURL" ).accordion({
-        collapsible: true
-});*/
     $( "#shortern" ).button().click(
         function(event){
             $.post('ajax.php',

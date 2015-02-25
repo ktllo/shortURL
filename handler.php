@@ -35,16 +35,19 @@ $needLog = true;
 if($row['flags'] & SU_FLAG_NOLOG )
     $needLog = false;
 if($needLog){
-    $reader = new Reader(SU_GEO_DB);
-    try{
-        $record = $reader->city($_SERVER['REMOTE_ADDR'])->country->isoCode;
-    }catch(GeoIp2\Exception\AddressNotFoundException $e){
-        $record = 'XX';
+    $record = 'XX';
+    if(SU_LOG_GEOINFO){
+        $reader = new Reader(SU_GEO_DB);
+        try{
+            $record = $reader->city($_SERVER['REMOTE_ADDR'])->country->isoCode;
+        }catch(GeoIp2\Exception\AddressNotFoundException $e){
+            $record = 'XX';
+        }
     }
     if(empty($_SERVER['HTTP_REFERER']))
         $refer = '';
     else
-        $refer =$_SERVER['HTTP_REFERER']; 
+        $refer =$_SERVER['HTTP_REFERER'];
     $stmt = $db->prepare('INSERT INTO '.SU_TABLE_LOG.'(`id`,`num`,`datetime`,`source`,`refer`,`country`) VALUES (?,ROUND(RAND()*1000000000),NOW(),?,?,?);');
     $stmt->execute(array($target,$_SERVER['REMOTE_ADDR'],$refer,$record));
 
