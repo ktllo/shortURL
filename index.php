@@ -13,7 +13,7 @@ define('UID',checkAuth());
         <link rel="stylesheet" href="includes/jquery-ui.css">
         <script type="text/javascript" src="includes/jquery-2.0.3.js"></script>
         <script type="text/javascript" src="includes/jquery-ui.js"></script>
-        
+
 <script type="text/javascript">
 function reloadList(){
     $.post('ajax.php',
@@ -80,7 +80,7 @@ function changePassword(){
                         {
                             action : 'password',
                             old : opwd,
-                            new : npwd 
+                            new : npwd
                         },
                         function(data){
                             result = JSON.parse(data);
@@ -103,7 +103,7 @@ function changePassword(){
             }
         }
     );
-}    
+}
 
 $(function(){
     <?php if(UID != 0){ ?>
@@ -115,7 +115,7 @@ $(function(){
     $("#newPassword").button().click(
         function(event){
             changePassword();
-        }  
+        }
     );
 <?php }else{ ?>
     $("#login").button().click(
@@ -123,10 +123,14 @@ $(function(){
             document.getElementById('flogin').submit();
         }
     );
+<?php }
+      if(getUserFlag() & SU_USER_OPS){ ?>
+      $("#admin").button().click(
+        function(event){
+          window.location='admin/';
+        }
+      );
 <?php }if(getUserFlag() & SU_USER_ADDURL){ ?>
-   /* $( "#newURL" ).accordion({
-        collapsible: true
-});*/
     $( "#shortern" ).button().click(
         function(event){
             $.post('ajax.php',
@@ -147,7 +151,7 @@ $(function(){
                                     $( this ).dialog( "close" );
                                     }
                             }
-                                
+
                             }
                         );
                         reloadList();
@@ -165,7 +169,7 @@ $(function(){
                         ).parent().addClass("ui-state-error");
                     }
                 }
-            
+
             );
         }
     );
@@ -187,7 +191,7 @@ $(function(){
     }) .click(function( event ) {
         reloadList();
     });
-    
+
 });
 
 
@@ -208,8 +212,11 @@ $(function(){
                 <input name="password" id="password" type="password">
                 <button id="login">Login</button>
             </form>
-        <?php }else{ ?>
-            <button id="newPassword">Change Password</button>    
+        <?php }else{
+                if(getUserFlag() & SU_USER_OPS){ ?>
+            <button id="admin">Admin Page</button>
+        <?php } ?>
+            <button id="newPassword">Change Password</button>
             <button id="logoff">Logoff</button>
         <?php } ?>
         </div>

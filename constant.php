@@ -4,6 +4,7 @@ include_once 'config.php';
 define('SU_USER_HOP',           0x0001);    #Half admin
 define('SU_USER_OP',            0x0002);    #Sys Admin
 define('SU_USER_SOP',           0x0003);    #Super admin
+define('SU_USER_OPS',           SU_USER_HOP | SU_USER_OP | SU_USER_SOP);    #All admin
 define('SU_USER_ADDURL',        0x0004);    #Able to add URL
 define('SU_USER_APIUSE',        0x0008);    #Can use API
 define('SU_USER_REMOVE',        0x0010);    #Can remove self created link
@@ -15,6 +16,7 @@ define('SU_FLAG_ENABLE',        0x0001);    #URL enabled
 define('SU_FLAG_NOLOG',         0x0002);    #No log for this entry
 define('SU_FLAG_AUTH',          0x0004);    #Authorization needed
 define('SU_FLAG_ADMIN_DISABLE', 0x0008);    #Indicate the link is disable by admin
+define('SU_FLAG_REVIEWED',      0x0010);    #Indicate the link is reviewed by admin
 ##Auth Mode
 define('SU_AUTH_PASSWORD', 0);
 define('SU_WEB', 0);
