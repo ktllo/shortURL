@@ -5,221 +5,23 @@ include_once 'constant.php';
 include_once 'dbconn.php';
 include_once 'function.php';
 if($_POST['action']=='new'){
-    if(!(getUserFlag() & SU_USER_ADDURL)){
-?>
-{
-    "Code"  : 403,
-    "Info"  : "No Permission" 
-}
-<?php
-    return;
-    }
-    if(empty($_POST['url'])){
-?>
-{
-    "Code" : 480,
-    "Info" : "Malformed request",
-    "Details" : "url required"
-}
-<?php
-        return;
-    }
-    $url = processURL($_POST['url']);
-    if($url === false){?>
-{
-    "Code"  : 403,
-    "Info"  : "Illegal URL Schema" 
-}
-<?php 
-    return;
-    }
-    if(SU_ID_TYPE == 34)
-        $idSpace = SU_ID_34;
-    else if(SU_ID_TYPE == 36)
-        $idSpace = SU_ID_36;
-    else if(SU_ID_TYPE == 58)
-        $idSpace = SU_ID_58;
-    else 
-        $idSpace = SU_ID_62;
-    $count = 0;
-    if(isset($_POST['id'])){
-        #Use given ID
-        $id = $_POST['id'];
-        for($i=0;$i<strlen($id);$i++){
-            $char = $id{$i};
-            if(strpos($idSpace,$char) === false){
-?>
-{
-    "Code" : 481,
-    "Info" : "Illegal Character",
-    "id" : "<?php echo $id;?>",
-    "detail" : "Legal characters are <?php echo $idSpace;?>",
-    "violoating" : "<?php echo $id{$i};?>"
-}
-<?php
-                return;
-            }
-        }
-        #ID Looks OK. Attempts to insert
-        $stmt = $db->prepare('INSERT INTO '.SU_TABLE_ENTRY.
-            ' (`id`,`url`,`flags`,`created`,`owner`,`source`) VALUES'.
-            ' (?,?,?,NOW(),?,?);');
-        $stmt->execute(array($id,$url,SU_DEFAULT_URL_FLAGS,checkAuth(),$_SERVER['REMOTE_ADDR']));
-        if($stmt->rowCount()!=1){
-?>
-{
-    "Code" : "481",
-    "Info" : "ID in use",
-    "id" : "<?php echo $id;?>"
-}
-<?php
-            return;
-        }
-    }else{
-        while(true){
-            $stmt = $db->prepare('INSERT INTO '.SU_TABLE_ENTRY.
-                ' (`id`,`url`,`flags`,`created`,`owner`,`source`) VALUES'.
-                ' (?,?,?,NOW(),?,?);');
-            $id = '';
-            for($i=0;$i<SU_ID_LENGTH;$i++){
-                $id.=$idSpace{rand(0,SU_ID_TYPE-1)};
-            }
-            $stmt->execute(array($id,$url,SU_DEFAULT_URL_FLAGS,checkAuth(),$_SERVER['REMOTE_ADDR']));
-            $count++;
-            if($stmt->rowCount()==1){
-                break;
-            }
-        }
-    }
-?>
-{
-    "Code"  : 200,
-    "id" : "<?php echo $id;?>",
-    "long"  : "<?php echo $url?>",
-    "round" : <?php echo $count;?>,
-    "short" : "<?php echo SU_BASE_URL."/$id";?>"
-}
-<?php
+    include 'api_add.php';
     return;
 }
 if($_POST['action']=='list'){
-    if(checkAuth() == 0){
-?>
-{
-    "count" : 0,
-    "data" : []
-}
-<?php
-        return;
-    }
-    $uid = checkAuth();
-    $stmt = $db->prepare('SELECT * FROM '.SU_TABLE_ENTRY.' WHERE `owner`=?');
-    $stmt->execute(array($uid));
-?>
-{
-    "count" : <?php echo $stmt->rowCount();?>,
-    "data"  : [
-<?php
-    while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
-?>
-        {
-        "id"    :   "<?php echo $row['id'];?>",
-        "url"   :   "<?php echo $row['url'];?>",
-<?php
-        $details = $db->prepare('SELECT COUNT(*) FROM '.SU_TABLE_LOG.' WHERE `id`=?');
-        $details->execute(array($row['id']));
-        $detailRow = $details->fetch(PDO::FETCH_NUM);
-?>
-        "hit"   :   <?php echo $detailRow[0];?>,
-        "enabled" : <?php echo ($row['flags'] & SU_FLAG_ENABLE); ?>
-        },
-<?php
-    }
-?>
-    {}]
-}
-<?php
+    include 'api_list.php';
     return;
 }
 
 if($_POST['action']=='enable'){
-    $target = $_POST['id'];
-    #TODO: Check owner
-    $uid = checkAuth();
-    $stmt = $db->prepare('SELECT * FROM '.SU_TABLE_ENTRY.' WHERE `id`=?');
-    $stmt->execute(array($target));
-    $record = $stmt->fetch(PDO::FETCH_ASSOC);
-    if($record['owner']!=$uid){
-?>
-{"Code":403,"Info":"You does not own this entry"}
-<?php
-        return;
-    }
-    $db->beginTransaction();
-    #Start transaction and disable autocommit
-    #retrive current flag
-    #calculate new flag(new = old & ~flag)
-    $flag = $record['flags'] | SU_FLAG_ENABLE;
-    $stmt = $db->prepare('UPDATE '.SU_TABLE_ENTRY.' SET `flags`=? WHERE `id`=?');
-    $stmt->execute(array($flag,$target));
-    $db->commit();
-    #Commit and enable autocommit
+    include 'api_enable.php';
     return;
 }
 if($_POST['action']=='disable'){
-    $target = $_POST['id'];
-    #TODO: Check owner
-    $uid = checkAuth();
-    $stmt = $db->prepare('SELECT * FROM '.SU_TABLE_ENTRY.' WHERE `id`=?');
-    $stmt->execute(array($target));
-    $record = $stmt->fetch(PDO::FETCH_ASSOC);
-    if($record['owner']!=$uid){
-?>
-{"Code":403,"Info":"You does not own this entry"}
-<?php
-        return;
-    }
-    $db->beginTransaction();
-    #Start transaction and disable autocommit
-    #retrive current flag
-    #calculate new flag(new = old & ~flag)
-    $flag = $record['flags'] & ~SU_FLAG_ENABLE;
-    $stmt = $db->prepare('UPDATE '.SU_TABLE_ENTRY.' SET `flags`=? WHERE `id`=?');
-    $stmt->execute(array($flag,$target));
-    $db->commit();
-    #Commit and enable autocommit
+    include 'api_disbale.php';
     return;
 }
 if($_POST['action'] == 'password'){
-    if(checkAuth() == 0){?>
-{
-{"Code":403,"Info":"You have to login first"}
-}
-<?php    
-    return;
-    }
-    #check old password
-    $stmt = $db->prepare('SELECT * FROM '.SU_TABLE_USER.' WHERE `uid`=?;');
-    $stmt->execute(array(checkAuth()));
-    $ok = false;
-    if($stmt->rowCount()==1){
-        $row = $stmt->fetch(PDO::FETCH_ASSOC);
-        if(password_verify($_POST['old'],$row['password']))
-            $ok = true;
-    }
-    if(!$ok){
-?>
-{"Code":403,"Info":"Incorrect password"}
-
-<?php
-        return;
-    }
-    #update password
-    $hash = password_hash($_POST['new'],PASSWORD_DEFAULT);
-    $stmt = $db->prepare('UPDATE '.SU_TABLE_USER.' SET `password`=? WHERE `uid`=?');
-    $stmt->execute(array($hash,checkAuth()));
-?>
-{"Code":200,"Info":"Password updated"}
-<?php
+    include 'api_password.php'; 
     return;
 }
