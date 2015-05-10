@@ -6,7 +6,6 @@ define('SU_USER_OP',            0x0002);    #Sys Admin
 define('SU_USER_SOP',           0x0003);    #Super admin
 define('SU_USER_OPS',           SU_USER_HOP | SU_USER_OP | SU_USER_SOP);    #All admin
 define('SU_USER_ADDURL',        0x0004);    #Able to add URL
-define('SU_USER_APIUSE',        0x0008);    #Can use API
 define('SU_USER_REMOVE',        0x0010);    #Can remove self created link
 define('SU_USER_NOLOG',         0x0020);    #No log for link usage
 
