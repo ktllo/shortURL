@@ -16,7 +16,7 @@ define('UID',checkAuth());
 
 <script type="text/javascript">
 function reloadList(){
-    $.post('ajax.php',
+    $.post('api.php',
         {action : 'list'},
         function(data){
 //            alert(data);
@@ -38,7 +38,7 @@ function reloadList(){
     );
 }
 function disableLink(id){
-    $.post('ajax.php',
+    $.post('api.php',
             {
                 action : 'disable',
                 id : id
@@ -49,7 +49,7 @@ function disableLink(id){
 }
 
 function enableLink(id){
-    $.post('ajax.php',
+    $.post('api.php',
             {
                 action : 'enable',
                 id : id
@@ -76,7 +76,7 @@ function changePassword(){
                         $( error ).dialog({ modal : true ,buttons:{OK : function(){  $( this ).dialog( "close" ); changePassword(); }}}).parent().addClass("ui-state-error");
                         return;
                     }
-                    $.post('ajax.php',
+                    $.post('api.php',
                         {
                             action : 'password',
                             old : opwd,
@@ -133,7 +133,7 @@ $(function(){
 <?php }if(getUserFlag() & SU_USER_ADDURL){ ?>
     $( "#shortern" ).button().click(
         function(event){
-            $.post('ajax.php',
+            $.post('api.php',
                 {
                     action : 'new',
                     url : document.getElementById('long').value
