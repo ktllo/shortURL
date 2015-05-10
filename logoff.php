@@ -6,5 +6,5 @@ if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
 $_SESSION['uid'] = 0;
-$_SESSION['uflag'] = SU_ANONYMOUS;
+$_SESSION['uflag'] = SU_ANONYMOUS &~SU_USER_OPS;
 header('location: ./');
